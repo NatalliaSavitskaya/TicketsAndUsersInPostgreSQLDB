@@ -3,7 +3,7 @@ import java.util.List;
 
 class TicketService {
     public static void main(String[] args) {
-        DAO dao = new DAO(); // Create DAO instance
+        DAO dao = new DAO();
 
         // Saving user to the database
         User user = new User("Christina Agile", new Timestamp(System.currentTimeMillis()));
@@ -22,15 +22,15 @@ class TicketService {
         }
 
         // Fetching ticket by ID
-        Ticket ticketById = dao.getTicketById(1); // Replace with an actual ID
+        Ticket ticketById = dao.getTicketById(1);
         if (ticketById != null) {
             System.out.println("Ticket found by ID: " + ticketById);
         } else {
             System.out.println("Ticket not found by ID.");
         }
 
-        // Fetch tickets by user ID
-        List<Ticket> ticketsByUserId = dao.getTicketsByUserId(1); // Replace with an actual user ID
+        // Fetching tickets by user_ID
+        List<Ticket> ticketsByUserId = dao.getTicketsByUserId(1);
         if (!ticketsByUserId.isEmpty()) {
             System.out.println("Tickets found by user ID:");
             for (Ticket eachTicket : ticketsByUserId) {
@@ -46,6 +46,14 @@ class TicketService {
             System.out.println("Ticket type updated successfully.");
         } else {
             System.out.println("Ticket not found or update failed.");
+        }
+
+        // Deleting user and his/her tickets
+        boolean isDeleted = dao.deleteUserById(1);
+        if (isDeleted) {
+            System.out.println("User and his/her tickets deleted successfully.");
+        } else {
+            System.out.println("User not found or deletion failed.");
         }
     }
 }

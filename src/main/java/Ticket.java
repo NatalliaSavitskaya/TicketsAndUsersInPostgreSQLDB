@@ -18,7 +18,6 @@ public class Ticket {
     }
 
     // getValues methods
-
     public int getUserId() {
         return this.userId;
     }

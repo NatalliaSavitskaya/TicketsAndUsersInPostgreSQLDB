@@ -144,4 +144,36 @@ public class DAO {
 
         return updated;
     }
+
+    // Method to delete a user and their tickets
+    public boolean deleteUserById(int userId) {
+        boolean success = false;
+        String deleteTicketsQuery = "DELETE FROM \"Ticket\" WHERE user_id = ?";
+        String deleteUserQuery = "DELETE FROM \"User\" WHERE id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement deleteTicketsStmt = conn.prepareStatement(deleteTicketsQuery);
+             PreparedStatement deleteUserStmt = conn.prepareStatement(deleteUserQuery)) {
+
+            conn.setAutoCommit(false);  // Disable auto-commit to start the transaction
+
+            deleteTicketsStmt.setInt(1, userId);  // Delete tickets associated with the user
+            int ticketsDeleted = deleteTicketsStmt.executeUpdate();
+
+            deleteUserStmt.setInt(1, userId); // Delete the user
+            int userDeleted = deleteUserStmt.executeUpdate();
+
+            if (ticketsDeleted > 0 || userDeleted > 0) {
+                conn.commit(); // Commit the transaction if both operations succeed
+                success = true;
+            } else {
+                conn.rollback();  // Rollback if no rows were affected
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return success;
+    }
 }

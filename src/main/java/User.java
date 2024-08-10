@@ -15,10 +15,10 @@ public class User {
         this.creationDate = creationDate;
     }
 
+    // getValues methods
     public String getName () {
         return this.name;
     }
-
     public java.sql.Timestamp getCreationDate () {
         return this.creationDate;
     }
