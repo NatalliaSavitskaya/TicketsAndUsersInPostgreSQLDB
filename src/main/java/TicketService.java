@@ -2,7 +2,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 class TicketService {
-    public static void main(String []args) {
+    public static void main(String[] args) {
         DAO dao = new DAO(); // Create DAO instance
 
         // Saving user to the database
@@ -38,6 +38,14 @@ class TicketService {
             }
         } else {
             System.out.println("No tickets found for the user ID.");
+        }
+
+        // Updating ticket type
+        boolean isUpdated = dao.updateTicketType(3, "MONTH");
+        if (isUpdated) {
+            System.out.println("Ticket type updated successfully.");
+        } else {
+            System.out.println("Ticket not found or update failed.");
         }
     }
 }

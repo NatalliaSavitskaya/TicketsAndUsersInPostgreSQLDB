@@ -123,4 +123,25 @@ public class DAO {
 
         return tickets;
     }
+
+    // Method to update ticket type
+    public boolean updateTicketType(int id, String newTicketType) {
+        String sql = "UPDATE \"Ticket\" SET ticket_type = ? WHERE id = ?";
+        boolean updated = false;
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newTicketType);
+            pstmt.setInt(2, id);
+
+            int rowsAffected = pstmt.executeUpdate();
+            updated = rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return updated;
+    }
 }
